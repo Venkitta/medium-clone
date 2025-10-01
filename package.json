@@ -1,0 +1,19 @@
+{
+  "name": "medium-clone-project",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy --minify",
+    "cf-typegen": "wrangler types --env-interface CloudflareBindings"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.16.3",
+    "@prisma/extension-accelerate": "^2.0.2",
+    "hono": "^4.9.9"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20251001.0",
+    "prisma": "^6.16.3",
+    "wrangler": "^4.4.0"
+  }
+}
