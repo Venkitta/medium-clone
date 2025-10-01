@@ -2,20 +2,35 @@ import { Hono } from 'hono'
 import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
 
-interface Bindings {
-  DATABASE_URL: string
-}
+const app = new Hono<{
+    Bindings: {
+        DATABASE_URL: string;
+    }
+}>();
 
-const app = new Hono<{ Bindings: Bindings }>()
 
+app.post('/api/v1/signup', async (c) => {
 
-app.post('/api/v1/signup', (c) => {
-
+  const body = await c.req.json()
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate())
 
-  return c.text('signup route')
+  try {
+    await prisma.user.create({
+      data: {
+        username: body.username,
+        password: body.password,
+        name: body.name
+      }
+    })
+    
+    return c.text('Signed Up')
+  } catch (e) {
+    console.log(e)
+    c.status(411)
+    return c.text('Invalid')
+  }
 })
 
 app.post('/api/v1/signin', (c) => {
