@@ -11,7 +11,7 @@ export const FullBlog = ({ blog }: {blog?: Blog}) => {
         <Appbar />
         <article className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-16 xl:px-24 py-8 lg:py-12">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
-                {/* Main Content */}
+    
                 <div className="lg:col-span-2">
                     <div className="bg-white rounded-lg shadow-sm p-6 sm:p-8">
                         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 leading-tight">
@@ -30,7 +30,7 @@ export const FullBlog = ({ blog }: {blog?: Blog}) => {
                     </div>
                 </div>
 
-                {/* Sidebar */}
+                
                 <aside className="lg:col-span-1">
                     <div className="bg-white rounded-lg shadow-sm p-6 sticky top-4">
                         <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-4">
