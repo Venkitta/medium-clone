@@ -20,6 +20,7 @@ model Blog {
   authorId Int
   content String
   title String
+  publishedDate DateTime @default(now())
   published Boolean @default(false)
   author User @relation(fields: [authorId], references: [id])
 }

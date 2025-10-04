@@ -47,7 +47,7 @@ userRouter.post('/signup', async (c) => {
 
   } catch (e) {
     return c.json({
-            error: "Error during signup:"
+            error: e
         }, 500)
   }
 })
@@ -68,8 +68,7 @@ userRouter.post('/signin', async(c) => {
     const user = await prisma.user.findFirst({
       where: {
         username: body.username,
-        password: body.password,
-        name: body.name
+        password: body.password
       }
     })
 
@@ -87,7 +86,7 @@ userRouter.post('/signin', async(c) => {
     
   } catch (e) {
     return c.json({
-            error: "Error while signing in"
+            error: e
         }, 500)
   }
 })
