@@ -65,7 +65,7 @@ userRouter.post('/signin', async(c) => {
   const prisma = getPrismaClient(c.env.DATABASE_URL)
 
   try {
-    const user = await prisma.user.findFirst({
+    const user = await prisma.user.findUnique({
       where: {
         username: body.username,
         password: body.password
@@ -82,11 +82,12 @@ userRouter.post('/signin', async(c) => {
       id: user.id
     }, c.env.JWT_SECRET)
 
-    return c.text(jwt)
+    return c.json({ token: jwt })
     
   } catch (e) {
-    return c.json({
-            error: e
-        }, 500)
+    return c.json(
+    { message: "Internal server error" },
+    500
+  )
   }
 })
