@@ -7,6 +7,7 @@ import { Blogs } from "./pages/Blogs";
 import { Publish } from "./pages/Publish"
 import { Suspense } from "react"
 import { UserBlogSkeleton } from "./components/UserBlogSkeleton"
+import { EditBlog } from "./pages/EditBlog";
 
 function App () {
   return (
@@ -27,6 +28,7 @@ function App () {
               }>
                 <Blog />
               </Suspense>} />
+          <Route path="/blog/:id/edit" element={<EditBlog />} />
           <Route path = "/blogs" element = {<Blogs />} />
           <Route path = "/publish" element = {<Publish />} />
         </Routes>

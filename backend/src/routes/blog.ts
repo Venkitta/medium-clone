@@ -2,7 +2,7 @@ import {Hono} from "hono";
 import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
 import { verify } from 'hono/jwt'
-import { createBlogInput } from "@venkitta/medium_common";
+import { createBlogInput, updateBlogInput } from "@venkitta/medium_common";
 
 export const blogRouter = new Hono<{
     Bindings: {
@@ -87,7 +87,7 @@ blogRouter.put('/', async(c) => {
   try {
     const body = await c.req.json();
 
-    const { success } = createBlogInput.safeParse(body);
+    const { success } = updateBlogInput.safeParse(body);
 
     if(!success){
         return c.json({
@@ -113,7 +113,30 @@ blogRouter.put('/', async(c) => {
 
     } catch (e) {
     console.error("Error updating blog:", e);
-    return c.json({ message: "Error while updating blog" }, 500);
+    return c.json({ message: "Error while updating blog" }, 403);
+  }
+})
+
+blogRouter.delete('/:id', async(c) => {
+  const authorId = c.get("userId")
+  const blogId = c.req.param("id")
+  const prisma = getPrismaClient(c.env.DATABASE_URL)
+
+  try {
+    await prisma.blog.delete({
+        where: {
+            id: Number(blogId),
+            authorId: Number(authorId)
+            },
+        });
+
+        return c.json({
+            message: "Blog deleted successfully"
+        }, 200)
+
+    } catch (e) {
+    console.error("Error deleting blog:", e);
+    return c.json({ message: "Error while deleting blog" }, 403);
   }
 })
 

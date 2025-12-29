@@ -22,7 +22,13 @@ export const Auth = ({type}: {type: "signup" | "signin"}) => {
             window.dispatchEvent(new Event('localStorageUpdated'));
             navigate("/blogs");    
         } catch (e) {
-            alert("Error while signing up")
+            console.error("Signup error:", e);
+
+            if (axios.isAxiosError(e)) {
+                alert(e.response?.data?.message || "Axios error occurred");
+            } else {
+                alert("Unknown error occurred");
+            }
         } finally {
             setLoading(false);
         }
