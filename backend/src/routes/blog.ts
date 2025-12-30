@@ -123,7 +123,7 @@ blogRouter.delete('/:id', async(c) => {
   const prisma = getPrismaClient(c.env.DATABASE_URL)
 
   try {
-    await prisma.blog.delete({
+    await prisma.blog.deleteMany({
         where: {
             id: Number(blogId),
             authorId: Number(authorId)
